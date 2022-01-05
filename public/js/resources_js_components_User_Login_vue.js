@@ -20,6 +20,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      email: null,
+      password: null
+    };
+  },
+  methods: {
+    login: function login() {
+      axios.post('/api/auth/login', {
+        email: this.email,
+        password: this.password
+      }).then(function (res) {
+        return localStorage.access_token = res.data.access_token;
+      });
+    }
+  },
   mounted: function mounted() {}
 });
 
@@ -109,31 +125,64 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "w-25" }, [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.email,
+          expression: "email",
+        },
+      ],
+      staticClass: "form-control mb-3",
+      attrs: { type: "email", placeholder: "email" },
+      domProps: { value: _vm.email },
+      on: {
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.email = $event.target.value
+        },
+      },
+    }),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.password,
+          expression: "password",
+        },
+      ],
+      staticClass: "form-control mb-3",
+      attrs: { type: "password", placeholder: "password" },
+      domProps: { value: _vm.password },
+      on: {
+        input: function ($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.password = $event.target.value
+        },
+      },
+    }),
+    _vm._v(" "),
+    _c("input", {
+      staticClass: "btn btn-primary",
+      attrs: { type: "submit", placeholder: "email" },
+      on: {
+        click: function ($event) {
+          $event.preventDefault()
+          return _vm.login.apply(null, arguments)
+        },
+      },
+    }),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-25" }, [
-      _c("input", {
-        staticClass: "form-control mb-3",
-        attrs: { type: "email", placeholder: "email" },
-      }),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control mb-3",
-        attrs: { type: "password", placeholder: "password" },
-      }),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "btn btn-primary",
-        attrs: { type: "submit", placeholder: "email" },
-      }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
