@@ -18,6 +18,5 @@ use App\Http\Controllers\IndexController;
 
 
 // Auth::routes();
-// Route::get('test', TestController::class);
 Route::get('{page}',IndexController::class)->where('page', '.*');
 
