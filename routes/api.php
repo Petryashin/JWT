@@ -36,6 +36,6 @@ Route::group([
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
 });
-Route::group(['middleware' => 'auth:api','prefix'=>'fruits'],function(){
+Route::group(['middleware' => 'jwt.auth','prefix'=>'fruits'],function(){
     Route::get('/', \App\Http\Controllers\Fruit\IndexController::class);
 });

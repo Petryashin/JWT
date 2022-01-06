@@ -9,10 +9,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr :key ='fruit.id' v-for="fruit in fruits">
-          <th scope="row">{{fruit.id}}</th>
-          <td>{{fruit.name}}</td>
-          <td>{{fruit.price}}</td>
+        <tr :key="fruit.id" v-for="fruit in fruits">
+          <th scope="row">{{ fruit.id }}</th>
+          <td>{{ fruit.name }}</td>
+          <td>{{ fruit.price }}</td>
         </tr>
       </tbody>
     </table>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import API from "../../api"
 export default {
   data() {
     return {
@@ -28,11 +29,13 @@ export default {
   },
   methods: {
     getFruits() {
-      axios.get("/api/fruits").then((res) => (this.fruits = res.data.data));
+      API.get("/api/fruits").then((res) => (this.fruits = res.data.data));
     },
+    initApi() {},
   },
+
   mounted() {
-      this.getFruits()
-  }
+    this.getFruits();
+  },
 };
 </script>

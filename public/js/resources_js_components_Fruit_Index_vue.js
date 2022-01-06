@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api */ "./resources/js/api.js");
 //
 //
 //
@@ -32,6 +33,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -42,15 +44,63 @@ __webpack_require__.r(__webpack_exports__);
     getFruits: function getFruits() {
       var _this = this;
 
-      axios.get("/api/fruits").then(function (res) {
+      _api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/fruits").then(function (res) {
         return _this.fruits = res.data.data;
       });
-    }
+    },
+    initApi: function initApi() {}
   },
   mounted: function mounted() {
     this.getFruits();
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/api.js":
+/*!*****************************!*\
+  !*** ./resources/js/api.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+
+
+var api = axios__WEBPACK_IMPORTED_MODULE_0___default().create();
+api.interceptors.request.use(function (config) {
+  if (localStorage.getItem("access_token")) {
+    config.headers.authorization = "Bearer " + localStorage.getItem("access_token");
+  }
+
+  return config;
+}, function (error) {});
+api.interceptors.response.use(function (config) {
+  return config;
+}, function (error) {
+  console.log(error.response);
+
+  if (error.response.data.message === "Token has expired") {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/auth/refresh", {}, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem("access_token"))
+      }
+    }).then(function (res) {
+      localStorage.setItem('access_token', res.data.access_token);
+      error.config.headers.authorization = "Bearer ".concat(res.data.access_token);
+      return api.request(error.config);
+    });
+  } //   if (error.response.status === 401){
+  //     router.push({name:'user.login'})
+  //   }
+
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (api);
 
 /***/ }),
 
