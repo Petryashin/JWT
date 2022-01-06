@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\IndexController;
 
 /*
@@ -17,5 +18,6 @@ use App\Http\Controllers\IndexController;
 
 
 // Auth::routes();
-
+// Route::get('test', TestController::class);
 Route::get('{page}',IndexController::class)->where('page', '.*');
+

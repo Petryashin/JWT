@@ -52,13 +52,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     store: function store() {
+      var _this = this;
+
       axios.post("/api/users", {
         name: this.name,
         email: this.email,
         password: this.password,
         password_conf: this.password_conf
       }).then(function (res) {
-        return console.log(res);
+        if (res.data.message) {
+          alert(res.data.message);
+          return;
+        }
+
+        localStorage.setItem("access_token", res.data.access_token);
+
+        _this.$router.push({
+          name: 'user.personal'
+        }); // console.log(res)
+
       });
     }
   },

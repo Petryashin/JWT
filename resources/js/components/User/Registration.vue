@@ -45,7 +45,15 @@ export default {
         email: this.email,
         password: this.password,
         password_conf: this.password_conf,
-      }).then(res =>console.log(res));
+      }).then(res =>{
+        if (res.data.message){
+          alert(res.data.message)
+          return
+        }
+        localStorage.setItem("access_token", res.data.access_token);
+        this.$router.push({name:'user.personal'})
+        // console.log(res)
+        });
     },
   },
   mounted() {},
