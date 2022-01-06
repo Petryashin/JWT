@@ -12,7 +12,7 @@
 
 ## Установка JWT:
 [Ресурс с документацией](https://jwt-auth.readthedocs.io/en/develop/laravel-installation/)
-## Чтобы развернуть  проект:
+## Чтобы развернуть проект:
 - Установка зависимостей backend
 ```bash
 composer install
